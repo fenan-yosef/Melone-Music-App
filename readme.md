@@ -3,7 +3,7 @@
 
 # FlutterMelody
 
-![FlutterMelody Logo](https://example.com/path/to/logo.png)
+![FlutterMelody Logo](https://logo.png)
 
 ## Overview
 
