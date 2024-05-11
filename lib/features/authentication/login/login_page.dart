@@ -42,7 +42,11 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             _icon(),
             const SizedBox(
-              height: 50,
+              height: 20,
+            ),
+            _brand(),
+            const SizedBox(
+              height: 20,
             ),
             _inputField("Username", usernameController),
             const SizedBox(
@@ -77,6 +81,18 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _brand() {
+    return const Text(
+      "Melone Music",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
   Widget _inputField(String hintText, TextEditingController controller,
       {isPassword = false}) {
     var border = OutlineInputBorder(
@@ -100,6 +116,14 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {
         debugPrint("Username :" + usernameController.text);
         debugPrint("Password :" + passwordController.text);
+        if (passwordController.text == "1234") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MusicFeedPage()),
+          );
+        }
+        usernameController.clear();
+        passwordController.clear();
       },
       child: const SizedBox(
         width: double.infinity,
