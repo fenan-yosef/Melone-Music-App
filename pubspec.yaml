@@ -38,6 +38,7 @@ dependencies:
   audioplayers: ^5.0.0
   path_provider: ^2.0.2
   on_audio_query: ^2.9.0
+  get_server: ^1.2.1
   # permission_handler: ^8.1.4+2
 
 

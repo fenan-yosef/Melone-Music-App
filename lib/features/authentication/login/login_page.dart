@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:msss/features/local_music_player/local_music_player_page.dart';
 import '../../music_feed/music_feed.dart';
 
 class LoginPage extends StatefulWidget {
@@ -116,12 +117,12 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {
         debugPrint("Username :" + usernameController.text);
         debugPrint("Password :" + passwordController.text);
-        if (passwordController.text == "1234") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MusicFeedPage()),
-          );
-        }
+        // if (passwordController.text == "1234") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LocalMusicPlayer()),
+        );
+        // }
         usernameController.clear();
         passwordController.clear();
       },
