@@ -56,7 +56,7 @@ class LocalMusicPlayer extends StatelessWidget {
                 );
               } else {
                 return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(7.0),
                     child: ListView.builder(
                         physics: BouncingScrollPhysics(),
                         itemCount: snapshot.data!.length,
@@ -66,48 +66,58 @@ class LocalMusicPlayer extends StatelessWidget {
                             // decoration:
                             //     BoxDecoration(borderRadius: BorderRadius.circular(12)),
                             child: Obx(
-                              () => ListTile(
-                                tileColor: Colors.deepPurple[100],
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                // tileColor: Colors.deepPurple,
-                                title: Text(
-                                  snapshot.data![index].displayNameWOExt,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                              () => Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8, right: 8),
+                                child: ListTile(
+                                  tileColor: Colors.deepPurple[100],
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
+                                  // tileColor: Colors.deepPurple,
+                                  title: Text(
+                                    snapshot.data![index].displayNameWOExt,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                subtitle: Text(
-                                  "${snapshot.data![index].artist}",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 10,
+                                  subtitle: Text(
+                                    "${snapshot.data![index].artist}",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 10,
+                                    ),
                                   ),
-                                ),
-                                leading: QueryArtworkWidget(
-                                  id: snapshot.data![index].id,
-                                  type: ArtworkType.AUDIO,
-                                  nullArtworkWidget: const Icon(
-                                    Icons.music_note,
-                                    color: Colors.black,
+                                  leading: QueryArtworkWidget(
+                                    id: snapshot.data![index].id,
+                                    type: ArtworkType.AUDIO,
+                                    nullArtworkWidget: const Icon(
+                                      Icons.music_note,
+                                      color: Colors.black,
+                                    ),
                                   ),
+                                  trailing:
+                                      controller.playIndex.value == index &&
+                                              controller.isPlaying.value
+                                          ? const Icon(
+                                              Icons.play_arrow,
+                                              color: black,
+                                              size: 26,
+                                            )
+                                          : null,
+                                  onTap: () {
+                                    Get.to(
+                                      () => Player(
+                                        data: snapshot.data!,
+                                      ),
+                                      transition: Transition.downToUp,
+                                    );
+                                    controller.playSong(
+                                        snapshot.data![index].uri, index);
+                                    controller.playSong(
+                                        snapshot.data![index].uri, index);
+                                  },
                                 ),
-                                trailing: controller.playIndex.value == index &&
-                                        controller.isPlaying.value
-                                    ? const Icon(
-                                        Icons.play_arrow,
-                                        color: black,
-                                        size: 26,
-                                      )
-                                    : null,
-                                onTap: () {
-                                  Get.to(() => Player(
-                                        data: snapshot.data![index],
-                                      ));
-                                  // controller.playSong(
-                                  //     snapshot.data![index].uri, index);
-                                },
                               ),
                             ),
                           );
