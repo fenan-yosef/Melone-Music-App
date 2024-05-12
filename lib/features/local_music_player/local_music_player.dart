@@ -16,12 +16,6 @@ class PlayerController extends GetxController {
   checkPermission() async {
     var perm = await Permission.storage.request();
     if (perm.isGranted) {
-      return audioQuery.querySongs(
-        ignoreCase: true,
-        orderType: OrderType.ASC_OR_SMALLER,
-        sortType: null,
-        uriType: UriType.EXTERNAL,
-      );
     } else {
       checkPermission();
     }
