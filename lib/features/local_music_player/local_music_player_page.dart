@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:msss/features/local_music_player/local_music_player.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../../utils/constants.dart';
+import './local_music_controller.dart';
 
 class LocalMusicPlayer extends StatelessWidget {
   const LocalMusicPlayer({super.key});
@@ -58,39 +59,55 @@ class LocalMusicPlayer extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: ListView.builder(
                         physics: BouncingScrollPhysics(),
-                        itemCount: 100,
+                        itemCount: snapshot.data!.length,
                         itemBuilder: (BuildContext, int index) {
                           return Container(
                             margin: EdgeInsets.only(bottom: 4),
                             // decoration:
                             //     BoxDecoration(borderRadius: BorderRadius.circular(12)),
-                            child: ListTile(
-                              tileColor: Colors.deepPurple[100],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12)),
-                              // tileColor: Colors.deepPurple,
-                              title: Text(
-                                snapshot.data![index].displayNameWOExt,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
+                            child: Obx(
+                              () => ListTile(
+                                tileColor: Colors.deepPurple[100],
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                // tileColor: Colors.deepPurple,
+                                title: Text(
+                                  snapshot.data![index].displayNameWOExt,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              subtitle: Text(
-                                "${snapshot.data![index].artist}",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 10,
+                                subtitle: Text(
+                                  "${snapshot.data![index].artist}",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 10,
+                                  ),
                                 ),
-                              ),
-                              leading: Icon(
-                                Icons.music_note,
-                                color: black,
-                              ),
-                              trailing: const Icon(
-                                Icons.play_arrow,
-                                color: black,
-                                size: 26,
+                                leading: QueryArtworkWidget(
+                                  id: snapshot.data![index].id,
+                                  type: ArtworkType.AUDIO,
+                                  nullArtworkWidget: const Icon(
+                                    Icons.music_note,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                trailing: controller.playIndex.value == index &&
+                                        controller.isPlaying.value
+                                    ? const Icon(
+                                        Icons.play_arrow,
+                                        color: black,
+                                        size: 26,
+                                      )
+                                    : null,
+                                onTap: () {
+                                  Get.to(() => Player(
+                                        data: snapshot.data![index],
+                                      ));
+                                  // controller.playSong(
+                                  //     snapshot.data![index].uri, index);
+                                },
                               ),
                             ),
                           );
