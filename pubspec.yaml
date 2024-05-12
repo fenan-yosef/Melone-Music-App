@@ -39,6 +39,9 @@ dependencies:
   path_provider: ^2.0.2
   on_audio_query: ^2.9.0
   get_server: ^1.2.1
+  just_audio: ^0.9.37
+  permission_handler: ^11.3.1
+  get: ^4.6.6
   # permission_handler: ^8.1.4+2
 
 
