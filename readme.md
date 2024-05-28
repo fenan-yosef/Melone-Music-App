@@ -53,3 +53,35 @@ FlutterMelody is licensed under the [MIT License](https://opensource.org/license
 - [Android Studio](https://developer.android.com/studio) - The official integrated development environment (IDE) for Android app development.
 - [GitHub](https://github.com/) - A platform for hosting and collaborating on Git repositories.
 
+
+  /// Applies any pending focus changes and notifies listeners that the focus
+  /// has changed.
+  ///
+  /// Must not be called during the build phase. This method is meant to be
+  /// called in a post-frame callback or microtask when the pending focus
+  /// changes need to be resolved before something else occurs.
+  ///
+  /// It can't be called during the build phase because not all listeners are
+  /// safe to be called with an update during a build.
+  ///
+    /// Applies any pending focus changes and notifies listeners that the focus
+  /// has changed.
+  ///
+  /// Must not be called during the build phase. This method is meant to be
+  /// called in a post-frame callback or microtask when the pending focus
+  /// changes need to be resolved before something else occurs.
+  ///
+  /// It can't be called during the build phase because not all listeners are
+  /// safe to be called with an update during a build.
+  ///
+    /// Applies any pending focus changes and notifies listeners that the focus
+  /// has changed.
+  ///
+  /// Must not be called during the build phase. This method is meant to be
+  /// called in a post-frame callback or microtask when the pending focus
+  /// changes need to be resolved before something else occurs.
+  ///
+  /// It can't be called during the build phase because not all listeners are
+  /// safe to be called with an update during a build.
+  ///
+
