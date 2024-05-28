@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:get_server/get_server.dart';
 import 'package:get/get.dart';
-import 'package:msss/features/local_music_player/local_music_player.dart';
+import 'package:Melone/features/local_music_player/local_music_player.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../../utils/constants.dart';
 import './local_music_controller.dart';

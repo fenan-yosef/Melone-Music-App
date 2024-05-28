@@ -1,42 +1,116 @@
-// import 'package:flutter/material.dart';
-// import 'package:get_server/get_server.dart';
-// import 'package:on_audio_query/on_audio_query.dart';
-// import '../../models/music_item.dart'; // Assuming you have a MusicItem model
+import 'package:Melone/features/api_music_player/api_music_player.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../local_music_player/local_music_player_page.dart';
 
-// class PlayerController extends GetxController {}
+class MusicFeedPage extends StatefulWidget {
+  @override
+  _MusicFeedPageState createState() => _MusicFeedPageState();
+}
 
-// // class MusicFeedPage extends StatelessWidget {
-// //   // Dummy list of music items for demonstration
-// //   final List<MusicItem> musicItems = [
-// //     MusicItem(title: 'Song 1', artist: 'Artist 1', duration: '3:45'),
-// //     MusicItem(title: 'Song 2', artist: 'Artist 2', duration: '4:10'),
-// //     MusicItem(title: 'Song 3', artist: 'Artist 3', duration: '2:55'),
-// //   ];
+class _MusicFeedPageState extends State<MusicFeedPage> {
+  List<dynamic> tracks = [];
 
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Scaffold(
-// //       appBar: AppBar(
-// //         title: Text(
-// //           'Music Feed',
-// //           textAlign: TextAlign.center,
-// //         ),
-// //       ),
-// //       body: ListView.builder(
-// //         itemCount: musicItems.length,
-// //         itemBuilder: (context, index) {
-// //           return ListTile(
-// //             title: Text(musicItems[index].title),
-// //             subtitle: Text(
-// //                 '${musicItems[index].artist} - ${musicItems[index].duration}'),
-// //             onTap: () {
-// //               // Handle tapping on music item
-// //               // For example, navigate to a music player page
-// //               // Navigator.push(context, MaterialPageRoute(builder: (context) => MusicPlayerPage(musicItem: musicItems[index])));
-// //             },
-// //           );
-// //         },
-// //       ),
-// //     );
-// //   }
-// // }
+  @override
+  void initState() {
+    super.initState();
+    fetchSoundCloudPlaylist();
+  }
+
+  void fetchSoundCloudPlaylist() async {
+    var url = 'https://soundcloud-scraper.p.rapidapi.com/v1/playlist/tracks';
+    var params = {
+      'playlist': 'https://soundcloud.com/thechainsmokers/sets/no-hard-feelings'
+    };
+    var headers = {
+      'X-RapidAPI-Key': '3c25554214msh75ac2607247858cp11e9f5jsnf436bba31bd1',
+      'X-RapidAPI-Host': 'soundcloud-scraper.p.rapidapi.com'
+    };
+
+    print(params);
+
+    var queryString = params.keys
+        .map((key) => '$key=${Uri.encodeComponent(params[key] ?? '')}')
+        .join('&');
+    var fullUrl = '$url?$queryString';
+    print('------------');
+    print(queryString);
+
+    try {
+      var response = await http.get(Uri.parse(fullUrl), headers: headers);
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        // print('data' + data.toString());
+        if (data['tracks'] != null && data['tracks']['items'] != null) {
+          print('---------------ulala-----------');
+          print("tracks");
+          // print(tracks[0]);
+          setState(() {
+            tracks = data['tracks']['items'];
+          });
+          print("tracks");
+          print(tracks[0]['type']);
+        } else {
+          print('Error: data["tracks"] or data["tracks"]["items"] is null');
+        }
+      } else {
+        print('Failed to load tracks: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('ejgu');
+      print('Error: $error');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('here');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Music Feed'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LocalMusicPlayer()),
+                );
+              },
+              child: Text('Your Musics'),
+            ),
+            SizedBox(height: 16.0),
+            Expanded(
+              child: tracks.isEmpty
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      itemCount: tracks.length,
+                      itemBuilder: (context, index) {
+                        var track = tracks[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      APIMusicPlayer(track: track)),
+                            );
+                          },
+                          child: ListTile(
+                            title: Text(track['title']),
+                            subtitle: Text(track['user']['name']),
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
