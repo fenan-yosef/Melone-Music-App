@@ -122,7 +122,7 @@ class Player extends StatelessWidget {
                       IconButton(
                           onPressed: () {
                             controller.playSong(
-                                data[controller.playIndex.value].uri,
+                                data[controller.playIndex.value - 1].uri,
                                 controller.playIndex.value - 1);
                           },
                           icon: const Icon(
@@ -161,7 +161,7 @@ class Player extends StatelessWidget {
                       IconButton(
                         onPressed: () {
                           controller.playSong(
-                              data[controller.playIndex.value].uri,
+                              data[controller.playIndex.value + 1].uri,
                               controller.playIndex.value + 1);
                         },
                         icon: Icon(
