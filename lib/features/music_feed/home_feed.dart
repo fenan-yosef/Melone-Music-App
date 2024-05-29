@@ -3,20 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:on_audio_query/on_audio_query.dart';
 import 'dart:convert';
-
+import '../search/search_page.dart';
 import '../../utils/constants.dart';
 import '../local_music_player/local_music_player.dart';
-
-// void main() => runApp(MyApp());
-//
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: HomeFeed(),
-//     );
-//   }
-// }
 
 class HomeFeed extends StatefulWidget {
   @override
@@ -76,21 +65,24 @@ class _HomeScreenState extends State<HomeFeed> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Melone",
-          style: TextStyle(
-            fontSize: 20,
-            color: purple,
-            fontWeight: FontWeight.w700,
+        title: Center(
+          child: Text(
+            "Melone",
+            style: TextStyle(
+              fontSize: 20,
+              color: purple,
+              fontWeight: FontWeight.w700,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.search_rounded),
-            color: black,
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(Icons.medication_outlined),
+        //     color: black,
+        //   )
+        // ],
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -308,15 +300,6 @@ class HorizontalTrackList extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-}
-
-class SearchScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Search Screen'),
     );
   }
 }
