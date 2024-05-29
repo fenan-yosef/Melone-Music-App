@@ -38,10 +38,6 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Deezer Search'),
-        backgroundColor: Colors.purple,
-      ),
       body: Container(
         padding: EdgeInsets.all(16.0),
         color: Colors.white,

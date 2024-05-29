@@ -13,6 +13,8 @@ class LocalMusicPlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(PlayerController());
 
+
+
     return Scaffold(
         // backgroundColor: black,
         body: FutureBuilder<List<SongModel>>(
