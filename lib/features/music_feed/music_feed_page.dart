@@ -1,5 +1,6 @@
 import 'package:Melone/features/local_music_player/local_music_player_page.dart';
 import 'package:Melone/features/search/search_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:on_audio_query/on_audio_query.dart';
@@ -7,6 +8,7 @@ import 'dart:convert';
 
 import '../../utils/constants.dart';
 import '../local_music_player/local_music_player.dart';
+import '../settings/settings_page.dart';
 
 class HomeFeed extends StatefulWidget {
   @override
@@ -32,6 +34,7 @@ class _HomeScreenState extends State<HomeFeed> {
       var randomAlbumsData = json.decode(randomAlbumResponse.body)['albums']['data'];
       var randomArtistsData = json.decode(randomAlbumResponse.body)['artists']['data'];
       var topTracksData = json.decode(topTracksResponse.body)['data'];
+      print(topTracksData);
       var randomTracksData = [json.decode(randomTracksResponse.body)];//['tracks']['data'];  // Single track
 
       return MusicFeedData(
@@ -64,52 +67,64 @@ class _HomeScreenState extends State<HomeFeed> {
       SettingsScreen()
     ];
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.account_circle_rounded),
-        title: Center(
-          child: Text(
-            "Melone",
-            style: TextStyle(
-              fontSize: 20,
-              color: purple,
-              fontWeight: FontWeight.w700,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xff30cfd0), Color(0xff330867)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        )
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          leading: Icon(Icons.account_circle_rounded),
+          backgroundColor: Colors.transparent,
+          title: Center(
+            child: Text(
+              "Melone",
+              style: TextStyle(
+                fontSize: 20,
+                color: purple,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.search_rounded),
+              color: black,
+            )
+          ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.search_rounded),
-            color: black,
-          )
-        ],
-      ),
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTabTapped,
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_music),
-            label: 'Local Music',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_rounded),
-            label: 'Menu',
-          ),
-        ],
-        selectedItemColor: Colors.deepPurple,
-        unselectedItemColor: Colors.grey,
-        elevation: 2.0,
+        body: _children[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: onTabTapped,
+          currentIndex: _currentIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.library_music),
+              label: 'Local Music',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu_rounded),
+              label: 'Menu',
+            ),
+          ],
+          selectedItemColor: Colors.deepPurple,
+          unselectedItemColor: Colors.grey,
+          backgroundColor: Colors.deepPurple,
+          elevation: 2.0,
+        ),
       ),
     );
   }
@@ -174,7 +189,11 @@ class SectionTitle extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Text(
         title,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -199,22 +218,46 @@ class HorizontalArtistList extends StatelessWidget {
           return Container(
             width: 160,
             child: Card(
-
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.network(artist.coverUrl, fit: BoxFit.cover, height: 120, width: 160),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(artist.name, maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+              color: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0)
+              ),
+              elevation: 3.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  gradient: LinearGradient(
+                    colors: [Color(0xff0ba360), Color(0xff3cba92)], // Replace with your desired colors
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16.0),
+                          child: Image.network(
+                            artist.coverUrl,
+                            fit: BoxFit.cover,
+                            height: 120,
+                            width: 160,
+                          ),
+                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(artist.name, maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
@@ -241,19 +284,39 @@ class HorizontalAlbumList extends StatelessWidget {
           return Container(
             width: 160,
             child: Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.network(album.coverUrl, fit: BoxFit.cover, height: 120, width: 160),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(album.title, maxLines: 1, overflow: TextOverflow.ellipsis),
+              color: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0)
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  gradient: LinearGradient(
+                    colors: [Color(0xff9795f0), Color(0xff3cba92)], // Replace with your desired colors
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text(album.artist, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.grey)),
-                  ),
-                ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16.0),
+                            child: Image.network(album.coverUrl, fit: BoxFit.cover, height: 120, width: 160)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(album.title, maxLines: 1, overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.bold, ),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(album.artist, maxLines: 1, overflow: TextOverflow.ellipsis,),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -270,6 +333,10 @@ class HorizontalTrackList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // print("track.coverUrl " + tracks[0].coverUrl);
+    // print(tracks[0].coverUrl);
+
     return Container(
       height: 100,
       child: ListView.builder(
@@ -295,9 +362,29 @@ class HorizontalTrackList extends StatelessWidget {
             child: Container(
               width: 200,
               child: Card(
-                child: ListTile(
-                  title: Text(track.title, maxLines: 1, overflow: TextOverflow.ellipsis),
-                  subtitle: Text(track.artist, maxLines: 1, overflow: TextOverflow.ellipsis),
+                color: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                      color: Color(0xff92cc9d),
+                      // gradient: LinearGradient(
+                      //   colors: [Color(0xff7028e4), Color(0xffe5b2ca)],
+                      //   begin: Alignment.topCenter,
+                      //   end: Alignment.bottomCenter,
+                      // )
+                  ),
+                  child: Column(
+                    children: [
+                      // Image.network(track.coverUrl),
+                      ListTile(
+                      title: Text(track.title, maxLines: 1, overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),),
+                      subtitle: Text(track.artist, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    ),
+                    ]
+                  ),
                 ),
               ),
             ),
@@ -312,15 +399,6 @@ class LocalMusicScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LocalMusicPlayer();
-  }
-}
-
-class SettingsScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Settings Screen'),
-    );
   }
 }
 
@@ -343,6 +421,7 @@ class Album {
 class Track {
   final String title;
   final String artist;
+  // final String coverUrl;
 
   Track({required this.title, required this.artist});
 
@@ -350,6 +429,7 @@ class Track {
     return Track(
       title: json['title'],
       artist: json['artist']['name'],
+      // coverUrl: json['album']['cover_small'],
     );
   }
 }
