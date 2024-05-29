@@ -15,27 +15,6 @@ class LocalMusicPlayer extends StatelessWidget {
 
     return Scaffold(
         // backgroundColor: black,
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.search_rounded),
-              color: black,
-            )
-          ],
-          leading: Icon(
-            Icons.sort_rounded,
-            color: black,
-          ),
-          title: Text(
-            "Melone",
-            style: TextStyle(
-              fontSize: 20,
-              color: purple,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
         body: FutureBuilder<List<SongModel>>(
             future: controller.audioQuery.querySongs(
               ignoreCase: true,
