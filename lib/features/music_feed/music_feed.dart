@@ -93,12 +93,7 @@ class _MusicFeedPageState extends State<MusicFeedPage> {
                         var track = tracks[index];
                         return GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      APIMusicPlayer(track: track)),
-                            );
+                            //
                           },
                           child: ListTile(
                             title: Text(track['title']),

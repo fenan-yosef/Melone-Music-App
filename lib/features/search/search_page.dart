@@ -38,9 +38,10 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Container(
         padding: EdgeInsets.all(16.0),
-        color: Colors.white,
+        color: Colors.transparent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,7 +49,7 @@ class _SearchScreenState extends State<SearchScreen> {
               decoration: InputDecoration(
                 labelText: 'Search',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.search, color: Colors.purple),
+                prefixIcon: Icon(Icons.search, color: Colors.white),
               ),
               onSubmitted: _search,
             ),
@@ -60,18 +61,20 @@ class _SearchScreenState extends State<SearchScreen> {
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Text(
                   _errorMessage,
-                  style: TextStyle(color: Colors.red, fontSize: 16),
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
             Expanded(
               child: ListView.builder(
+                physics: BouncingScrollPhysics(),
                 itemCount: _results.length,
                 itemBuilder: (context, index) {
                   return Card(
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: 2),
                     child: ListTile(
                       leading: Icon(Icons.music_note, color: Colors.purple),
-                      title: Text(_results[index]),
+                      title: Text(_results[index],
+                      style: TextStyle(fontWeight: FontWeight.bold),),
                     ),
                   );
                 },

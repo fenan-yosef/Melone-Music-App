@@ -1,65 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/state_manager.dart';
+import '../../utils/constants.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import '../music_feed/music_feed_page.dart';
 
-class APIMusicPlayer extends StatefulWidget {
-  final Map<String, dynamic> track;
+class APIMusicPlayer extends StatelessWidget {
+  final Track track;
 
   APIMusicPlayer({required this.track});
 
   @override
-  _APIMusicPlayerState createState() => _APIMusicPlayerState();
-}
-
-class _APIMusicPlayerState extends State<APIMusicPlayer> {
-  late AudioPlayer _audioPlayer;
-  bool _isPlaying = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _audioPlayer = AudioPlayer();
-  }
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
-  void _playOrPause() async {
-    if (_isPlaying) {
-      await _audioPlayer.pause();
-    } else {
-      await _audioPlayer.play(UrlSource(widget.track['permalink']));
-    }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // Implement your track player widget here
     return Scaffold(
       appBar: AppBar(
-        title: Text('Music Player'),
+        title: Text('Now Playing'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(widget.track['artworkUrl']),
-            SizedBox(height: 16.0),
-            Text(
-              widget.track['title'],
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8.0),
-            Text(widget.track['user']['name']),
-            SizedBox(height: 16.0),
-            IconButton(
-              icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
-              iconSize: 48.0,
-              onPressed: _playOrPause,
+            Text('Now playing: ${track.title}'),
+            ElevatedButton(
+              onPressed: () {
+                // Play the track using the provided previewUrl
+              },
+              child: Text('Play'),
             ),
           ],
         ),
@@ -67,3 +36,179 @@ class _APIMusicPlayerState extends State<APIMusicPlayer> {
     );
   }
 }
+
+//
+// class Player extends StatelessWidget {
+//   final List<SongModel> data;
+//   const Player({super.key, required this.data});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     var controller = Get.find<PlayerController>();
+//
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       appBar: AppBar(
+//         leading: IconButton(
+//           onPressed: () {},
+//           icon: Icon(Icons.arrow_back_ios_new_rounded),
+//         ),
+//         title: Center(
+//             child: Text(
+//               "Now Playing",
+//               style: TextStyle(
+//                 fontWeight: FontWeight.w500,
+//                 fontSize: 20,
+//               ),
+//             )),
+//         actions: [
+//           IconButton(
+//               onPressed: () {}, icon: Icon(Icons.favorite_border_rounded))
+//         ],
+//       ),
+//       body: Column(
+//         children: [
+//           Obx(
+//                 () => Expanded(
+//                 child: Container(
+//                   clipBehavior: Clip.antiAliasWithSaveLayer,
+//                   height: 300,
+//                   width: 300,
+//                   decoration: BoxDecoration(
+//                     shape: BoxShape.circle,
+//                     // color: Colors.deepPurple[100],
+//                   ),
+//                   alignment: Alignment.center,
+//                   child: QueryArtworkWidget(
+//                     id: data[controller.playIndex.value].id,
+//                     type: ArtworkType.AUDIO,
+//                     artworkHeight: double.infinity,
+//                     artworkWidth: double.infinity,
+//                     nullArtworkWidget: const Icon(
+//                       Icons.music_note_rounded,
+//                       size: 48,
+//                       color: whiteColor,
+//                     ),
+//                   ),
+//                 )),
+//           ),
+//           SizedBox(
+//             height: 12,
+//           ),
+//           Expanded(
+//               child: Container(
+//                 padding: const EdgeInsets.all(8),
+//                 alignment: Alignment.center,
+//                 decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+//                   color: whiteColor,
+//                 ),
+//                 child: Obx(
+//                       () => Column(
+//                     children: [
+//                       Text(
+//                         "${data[controller.playIndex.value].displayNameWOExt}",
+//                         textAlign: TextAlign.center,
+//                         overflow: TextOverflow.ellipsis,
+//                         maxLines: 2,
+//                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+//                       ),
+//                       SizedBox(
+//                         height: 12,
+//                       ),
+//                       Text(
+//                         "${data[controller.playIndex.value].artist}",
+//                         style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+//                       ),
+//                       SizedBox(
+//                         height: 12,
+//                       ),
+//                       Obx(
+//                             () => Row(
+//                           children: [
+//                             Text("${controller.position.value}"),
+//                             Expanded(
+//                                 child: Slider(
+//                                     thumbColor: Colors.deepPurple,
+//                                     inactiveColor: Colors.deepPurple[100],
+//                                     activeColor: Colors.deepPurple,
+//                                     min: Duration(seconds: 0).inSeconds.toDouble(),
+//                                     max: controller.max.value,
+//                                     value: controller.value.value,
+//                                     onChanged: (newValue) {
+//                                       controller.changeDurationToSeconds(
+//                                           newValue.toInt());
+//                                       newValue = newValue;
+//                                     })),
+//                             Text("${controller.duration.value}")
+//                           ],
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: 12,
+//                       ),
+//                       Row(
+//                         mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                         children: [
+//                           IconButton(
+//                               onPressed: () {
+//                                 controller.playSong(
+//                                     data[controller.playIndex.value - 1].uri,
+//                                     controller.playIndex.value - 1);
+//                               },
+//                               icon: const Icon(
+//                                 Icons.skip_previous_rounded,
+//                                 size: 40,
+//                                 color: Colors.deepPurple,
+//                               )),
+//                           Obx(
+//                                 () => CircleAvatar(
+//                               radius: 35,
+//                               backgroundColor: Colors.deepPurple,
+//                               child: Transform.scale(
+//                                 scale: 2.5,
+//                                 child: IconButton(
+//                                     onPressed: () {
+//                                       if (controller.isPlaying.value) {
+//                                         controller.audioPlayer.pause();
+//                                         controller.isPlaying(false);
+//                                       } else {
+//                                         controller.audioPlayer.play();
+//                                         controller.isPlaying(true);
+//                                       }
+//                                     },
+//                                     icon: controller.isPlaying.value
+//                                         ? Icon(
+//                                       Icons.pause_outlined,
+//                                       color: whiteColor,
+//                                     )
+//                                         : Icon(
+//                                       Icons.play_arrow_rounded,
+//                                       color: whiteColor,
+//                                     )),
+//                               ),
+//                             ),
+//                           ),
+//                           IconButton(
+//                             onPressed: () {
+//                               controller.playSong(
+//                                   data[controller.playIndex.value + 1].uri,
+//                                   controller.playIndex.value + 1);
+//                             },
+//                             icon: Icon(
+//                               Icons.skip_next_rounded,
+//                               size: 40,
+//                               color: Colors.deepPurple,
+//                             ),
+//                           )
+//                         ],
+//                       )
+//                     ],
+//                   ),
+//                 ),
+//               ))
+//         ],
+//       ),
+//     );
+//   }
+// }

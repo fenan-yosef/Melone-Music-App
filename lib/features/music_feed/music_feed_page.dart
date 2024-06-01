@@ -7,6 +7,7 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'dart:convert';
 
 import '../../utils/constants.dart';
+import '../api_music_player/try2.dart';
 import '../local_music_player/local_music_player.dart';
 import '../settings/settings_page.dart';
 
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeFeed> {
   Widget build(BuildContext context) {
     List<Widget> _children = [
       MusicFeed(musicFeedData: _musicFeedData),
-      SearchScreen(),
+      SearchPage(),
       LocalMusicScreen(),
       SettingsScreen()
     ];
@@ -100,9 +101,11 @@ class _HomeScreenState extends State<HomeFeed> {
         ),
         body: _children[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
+          // fixedColor: Colors.red,
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           items: [
+
             BottomNavigationBarItem(
               icon: new Icon(Icons.home),
               label: 'Home',
@@ -333,10 +336,6 @@ class HorizontalTrackList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    // print("track.coverUrl " + tracks[0].coverUrl);
-    // print(tracks[0].coverUrl);
-
     return Container(
       height: 100,
       child: ListView.builder(
@@ -345,19 +344,18 @@ class HorizontalTrackList extends StatelessWidget {
         itemCount: tracks.length,
         itemBuilder: (context, index) {
           final track = tracks[index];
-
           return GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Player(data: [
-                  // SongModel(
-                  //   id: track.id,
-                  //   uri: track.uri,
-                  //   displayNameWOExt: track.title,
-                  //   artist: track.artist,
-                  // )
-                ],)),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) =>
+              //         Player(
+              //       data: tracks, // Pass the list of tracks
+              //       currentIndex: index, // Pass the index of the selected track
+              //     ),
+              //   ),
+              // );
             },
             child: Container(
               width: 200,
@@ -366,24 +364,26 @@ class HorizontalTrackList extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                      color: Color(0xff92cc9d),
-                      // gradient: LinearGradient(
-                      //   colors: [Color(0xff7028e4), Color(0xffe5b2ca)],
-                      //   begin: Alignment.topCenter,
-                      //   end: Alignment.bottomCenter,
-                      // )
+                    color: Color(0xff92cc9d),
                   ),
                   child: Column(
                     children: [
-                      // Image.network(track.coverUrl),
                       ListTile(
-                      title: Text(track.title, maxLines: 1, overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),),
-                      subtitle: Text(track.artist, maxLines: 1, overflow: TextOverflow.ellipsis),
-                    ),
-                    ]
+                        title: Text(
+                          track.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(
+                          track.artist,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -394,6 +394,7 @@ class HorizontalTrackList extends StatelessWidget {
     );
   }
 }
+
 
 class LocalMusicScreen extends StatelessWidget {
   @override
@@ -419,20 +420,21 @@ class Album {
 }
 
 class Track {
+  final String previewUri;
   final String title;
   final String artist;
-  // final String coverUrl;
 
-  Track({required this.title, required this.artist});
+  Track({required this.previewUri, required this.title, required this.artist});
 
   factory Track.fromJson(Map<String, dynamic> json) {
     return Track(
+      previewUri: json['preview'],
       title: json['title'],
       artist: json['artist']['name'],
-      // coverUrl: json['album']['cover_small'],
     );
   }
 }
+
 
 class Artist {
   final String name;

@@ -16,7 +16,7 @@ class LocalMusicPlayer extends StatelessWidget {
 
 
     return Scaffold(
-        // backgroundColor: black,
+        backgroundColor: Colors.transparent,
         body: FutureBuilder<List<SongModel>>(
             future: controller.audioQuery.querySongs(
               ignoreCase: true,
@@ -37,23 +37,23 @@ class LocalMusicPlayer extends StatelessWidget {
                 );
               } else {
                 return Padding(
-                    padding: const EdgeInsets.all(7.0),
+                    padding: const EdgeInsets.all(0.0),
                     child: ListView.builder(
                         physics: BouncingScrollPhysics(),
                         itemCount: snapshot.data!.length,
                         itemBuilder: (BuildContext, int index) {
                           return Container(
-                            margin: EdgeInsets.only(bottom: 4),
+                            margin: EdgeInsets.only(bottom: 1),
                             // decoration:
                             //     BoxDecoration(borderRadius: BorderRadius.circular(12)),
                             child: Obx(
                               () => Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 8, right: 8),
+                                    const EdgeInsets.only(left: 0, right: 0),
                                 child: ListTile(
-                                  tileColor: Colors.deepPurple[100],
+                                  tileColor: Colors.transparent,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
+                                      borderRadius: BorderRadius.circular(0)),
                                   // tileColor: Colors.deepPurple,
                                   title: Text(
                                     snapshot.data![index].displayNameWOExt,
