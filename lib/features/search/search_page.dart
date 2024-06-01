@@ -1,83 +1,149 @@
-// search_screen.dart
 import 'package:flutter/material.dart';
-import './search_controller.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:audioplayers/audioplayers.dart';
+import '../../utils/constants.dart';
+import '../api_music_player/api_player_view.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchPage extends StatefulWidget {
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
-  final SearchControler _controller = SearchControler();
-  List<String> _results = [];
-  bool _isLoading = false;
-  String _errorMessage = '';
+class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateMixin {
 
-  void _search(String query) async {
+  final TextEditingController _controller = TextEditingController();
+  final String clientId = '31a665e6'; // Replace with your actual client ID
+  TabController? _tabController;
+  bool _isLoading = false;
+  List<dynamic> _results = [];
+  AudioPlayer _audioPlayer = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  Future<void> _search(String query, String type) async {
     setState(() {
       _isLoading = true;
-      _errorMessage = '';
     });
 
-    try {
-      List<String> results = await _controller.search(query);
+    String url;
+    switch (type) {
+      case 'albums':
+        url = 'https://api.jamendo.com/v3.0/albums/?client_id=$clientId&format=json&search=$query';
+        break;
+      case 'artists':
+        url = 'https://api.jamendo.com/v3.0/artists/?client_id=$clientId&format=json&search=$query';
+        break;
+      case 'tracks':
+        url = 'https://api.jamendo.com/v3.0/tracks/?client_id=$clientId&format=json&search=$query';
+        break;
+      case 'genres':
+        url = 'https://api.jamendo.com/v3.0/tags/?client_id=$clientId&format=json&search=$query';
+        break;
+      default:
+        url = '';
+        break;
+    }
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
       setState(() {
-        _results = results;
-      });
-    } catch (e) {
-      setState(() {
-        _errorMessage = e.toString();
-      });
-    } finally {
-      setState(() {
+        _results = data['results'];
         _isLoading = false;
       });
+    } else {
+      throw Exception('Failed to load search results');
     }
+  }
+
+  void _play(String url) async {
+    await _audioPlayer.play(UrlSource(url));
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    _tabController?.dispose();
+    super.dispose();
+  }
+
+  void _onTabChanged(int tabIndex) {
+    String query = _controller.text;
+    String type = tabIndex == 0
+        ? 'albums'
+        : tabIndex == 1
+        ? 'artists'
+        : tabIndex == 2
+        ? 'tracks'
+        : 'genres';
+    _search(query, type);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        color: Colors.transparent,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        bottom: TabBar(
+          labelColor: purple,
+          unselectedLabelColor: Colors.white,
+          controller: _tabController,
+          tabs: [
+            Tab(text: 'Albums'),
+            Tab(text: 'Artists'),
+            Tab(text: 'Tracks'),
+            Tab(text: 'Genres'),
+          ],
+          onTap: _onTabChanged,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
+              style: const TextStyle(color: Colors.white, fontStyle: FontStyle.italic),
+              controller: _controller,
               decoration: InputDecoration(
-                labelText: 'Search',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.search, color: Colors.white),
-              ),
-              onSubmitted: _search,
-            ),
-            SizedBox(height: 20),
-            if (_isLoading)
-              Center(child: CircularProgressIndicator(color: Colors.purple)),
-            if (_errorMessage.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Text(
-                  _errorMessage,
-                  style: TextStyle(fontSize: 16),
+                hintText: 'Search...',
+                hintStyle: TextStyle(
+                    color: Colors.white38
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.search, color: Colors.white,),
+                  onPressed: () {
+                    String query = _controller.text;
+                    String type = _tabController?.index == 0
+                        ? 'albums'
+                        : _tabController?.index == 1
+                        ? 'artists'
+                        : _tabController?.index == 2
+                        ? 'tracks'
+                        : 'genres';
+                    _search(query, type);
+                  },
                 ),
               ),
+            ),
             Expanded(
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemCount: _results.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    margin: EdgeInsets.symmetric(vertical: 2),
-                    child: ListTile(
-                      leading: Icon(Icons.music_note, color: Colors.purple),
-                      title: Text(_results[index],
-                      style: TextStyle(fontWeight: FontWeight.bold),),
-                    ),
-                  );
-                },
+              child: _isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : TabBarView(
+                controller: _tabController,
+                children: [
+                  _buildResultsList('albums'),
+                  _buildResultsList('artists'),
+                  _buildResultsList('tracks'),
+                  _buildResultsList('genres'),
+                ],
               ),
             ),
           ],
@@ -85,4 +151,64 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
+
+  Widget _buildResultsList(String type) {
+    if (type == 'albums' || type == 'artists') {
+      return ListView.builder(
+        itemCount: _results.length,
+        itemBuilder: (context, index) {
+          final item = _results[index];
+          return ListTile(
+            title: Text(item['name'], style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            leading: Image.network(item['image']),
+            subtitle: type == 'albums' ? Text('Album', style: TextStyle(color: Colors.white38),) : Text('Artist', style: TextStyle(color: Colors.white38),),
+            onTap: (){
+              // print(_results.toList());
+            },
+          );
+        },
+      );
+    } else if (type == 'tracks') {
+      return ListView.builder(
+        itemCount: _results.length,
+        itemBuilder: (context, index) {
+          final track = _results[index];
+          return ListTile(
+            title: Text(track['name'], style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            subtitle: Text(track['album_name'] ?? 'Single', style: TextStyle(color: Colors.white38)),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PlayerPage(
+                    trackName: track['name'],
+                    audioUrl: track['audio'],
+                    albumImage: track['image'],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      );
+    } else if (type == 'genres') {
+      if(_results.length == 0){
+        return Center(
+          child:Text("No results found", style: TextStyle(color: Colors.white38)),
+        );
+      }
+      return ListView.builder(
+        itemCount: _results.length,
+        itemBuilder: (context, index) {
+          final genre = _results[index];
+          return ListTile(
+            title: Text(genre['name'], style: TextStyle(color: Colors.white38)),
+          );
+        },
+      );
+    } else {
+      return Container();
+    }
+  }
+
 }

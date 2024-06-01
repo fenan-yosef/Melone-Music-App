@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../../api_music_player/try2.dart';
+import '../../api_music_player/api_player_view.dart';
 // import '../../api_music_player/try.dart';
 import 'package:Melone/features/local_music_player/local_music_player_page.dart';
 import '../../music_feed/music_feed.dart';

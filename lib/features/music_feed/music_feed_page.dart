@@ -7,7 +7,7 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'dart:convert';
 
 import '../../utils/constants.dart';
-import '../api_music_player/try2.dart';
+import '../api_music_player/api_player_view.dart';
 import '../local_music_player/local_music_player.dart';
 import '../settings/settings_page.dart';
 
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeFeed> {
       MusicFeed(musicFeedData: _musicFeedData),
       SearchPage(),
       LocalMusicScreen(),
-      SettingsScreen()
+      // SettingsScreen()
     ];
 
     return Container(
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeFeed> {
           actions: [
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.search_rounded),
+              icon: Icon(Icons.search_rounded, color: Colors.transparent,),
               color: black,
             )
           ],
