@@ -6,6 +6,10 @@ import 'dart:convert';
 import '../search/search_page.dart';
 import '../../utils/constants.dart';
 import '../local_music_player/local_music_player.dart';
+import '../settings/settings_page.dart';
+import '../settings/settings_controller.dart';
+import '../settings/settings_viewmodel.dart';
+
 
 class HomeFeed extends StatefulWidget {
   @override
@@ -314,8 +318,13 @@ class LocalMusicScreen extends StatelessWidget {
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Settings Screen'),
+    MenuModel model = MenuModel();
+    MenuControler controller = MenuControler(model);
+
+    return MaterialApp(
+      title: 'Music Player MVC',
+      home: MenuView(controller: controller),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -14,6 +14,6 @@
 //     '/localMusicPlayer': (context) => LocalMusicPlayerPage(),
 //     '/musicEqualizer': (context) => MusicEqualizerPage(),
 //     '/search': (context) => SearchPage(),
-//     '/settings': (context) => SettingsPage(),
+    // '/settings': (context) => SettingsPage(),
 //   };
 // }
