@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeFeed> {
               label: 'Menu',
             ),
           ],
-          selectedItemColor: Color(0xff815cc2),
+          selectedItemColor: Color(0xff2cc3c4),
           unselectedItemColor: Colors.white,
           backgroundColor: Colors.transparent,
           elevation: 2.0,
