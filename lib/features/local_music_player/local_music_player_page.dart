@@ -14,7 +14,7 @@ class LocalMusicPlayer extends StatelessWidget {
     var controller = Get.put(PlayerController());
 
     return Scaffold(
-        // backgroundColor: black,
+        backgroundColor: Colors.transparent,
         body: FutureBuilder<List<SongModel>>(
             future: controller.audioQuery.querySongs(
               ignoreCase: true,
@@ -25,13 +25,18 @@ class LocalMusicPlayer extends StatelessWidget {
             builder: (BuildContext context, snapshot) {
               if (snapshot.data == null) {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(color: Colors.black),
                 );
               } else if (snapshot.data!.isEmpty) {
                 print("True");
                 print(snapshot.data);
                 return Center(
-                  child: Text("No song found!", style: ourStyle()),
+                  child: Text("No song found!",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w100,
+                      )),
                 );
               } else {
                 return Padding(

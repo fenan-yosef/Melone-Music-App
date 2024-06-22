@@ -1,3 +1,4 @@
+import 'package:Melone/features/music_feed/home_feed.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import './routes.dart';
@@ -14,10 +15,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginPage(), // Set LoginPage as the home page
+      home: HomeFeed(), //LoginPage(), // Set LoginPage as the home page
       // initialRoute: Routes.initial,
       // routes: Routes.routes,
     );
-    
   }
 }
