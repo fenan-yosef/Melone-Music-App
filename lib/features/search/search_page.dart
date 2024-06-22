@@ -104,6 +104,7 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
           ],
           onTap: _onTabChanged,
         ),
+
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
