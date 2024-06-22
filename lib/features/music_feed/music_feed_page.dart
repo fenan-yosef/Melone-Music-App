@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeFeed> {
       MusicFeed(musicFeedData: _musicFeedData),
       SearchPage(),
       LocalMusicScreen(),
-      // SettingsScreen()
+      SettingsScreen()
     ];
 
     return Container(
@@ -79,14 +79,14 @@ class _HomeScreenState extends State<HomeFeed> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          leading: Icon(Icons.account_circle_rounded),
+          leading: Icon(Icons.account_circle_rounded, color: Colors.transparent,),
           backgroundColor: Colors.transparent,
           title: Center(
             child: Text(
               "Melone",
               style: TextStyle(
                 fontSize: 20,
-                color: purple,
+                color: Color(0xff2c0d6e),
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -101,14 +101,13 @@ class _HomeScreenState extends State<HomeFeed> {
         ),
         body: _children[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
-          // fixedColor: Colors.red,
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           items: [
-
             BottomNavigationBarItem(
               icon: new Icon(Icons.home),
               label: 'Home',
+              backgroundColor: Color(0xff091838),
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.search),
@@ -123,9 +122,9 @@ class _HomeScreenState extends State<HomeFeed> {
               label: 'Menu',
             ),
           ],
-          selectedItemColor: Colors.deepPurple,
-          unselectedItemColor: Colors.grey,
-          backgroundColor: Colors.deepPurple,
+          selectedItemColor: Color(0xff815cc2),
+          unselectedItemColor: Colors.white,
+          backgroundColor: Colors.transparent,
           elevation: 2.0,
         ),
       ),
@@ -153,9 +152,24 @@ class MusicFeed extends StatelessWidget {
       future: musicFeedData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator( color: Colors.black,));
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          print('Error: ${snapshot.error}');
+          return Center(child: Column(
+            children: [
+              SizedBox(height: 90),
+              Icon(Icons.wifi_off_rounded, size: 60, color: Colors.white,),
+              SizedBox(height: 30),
+              Text("Failed to connect to deezer.com, \nplease check your conection!",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w100,
+                  letterSpacing: 2,
+                ),)
+            ],
+          )
+          );
         } else {
           return SingleChildScrollView(
             child: Column(

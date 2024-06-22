@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../features/music_feed/music_feed_page.dart';
 import './routes.dart';
 import '../features/authentication/login/login_page.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginPage(), // Set LoginPage as the home page
+      home: HomeFeed(), //LoginPage(),
       // initialRoute: Routes.initial,
       // routes: Routes.routes,
     );

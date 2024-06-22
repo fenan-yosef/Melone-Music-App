@@ -33,7 +33,12 @@ class LocalMusicPlayer extends StatelessWidget {
                 print("True");
                 print(snapshot.data);
                 return Center(
-                  child: Text("No song found!", style: ourStyle()),
+                  child: Text("No song found!", style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w200,
+                    letterSpacing: 2,
+                    fontSize: 20,
+                  )),
                 );
               } else {
                 return Padding(

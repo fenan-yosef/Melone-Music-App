@@ -76,11 +76,11 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
   void _onTabChanged(int tabIndex) {
     String query = _controller.text;
     String type = tabIndex == 0
-        ? 'albums'
+        ? 'tracks'
         : tabIndex == 1
         ? 'artists'
         : tabIndex == 2
-        ? 'tracks'
+        ? 'albums'
         : 'genres';
     _search(query, type);
   }
@@ -93,13 +93,13 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         bottom: TabBar(
-          labelColor: purple,
+          labelColor: Color(0xff0B183F),
           unselectedLabelColor: Colors.white,
           controller: _tabController,
           tabs: [
-            Tab(text: 'Albums'),
-            Tab(text: 'Artists'),
             Tab(text: 'Tracks'),
+            Tab(text: 'Artists'),
+            Tab(text: 'Albums'),
             Tab(text: 'Genres'),
           ],
           onTap: _onTabChanged,
@@ -122,11 +122,11 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                   onPressed: () {
                     String query = _controller.text;
                     String type = _tabController?.index == 0
-                        ? 'albums'
+                        ? 'tracks'
                         : _tabController?.index == 1
                         ? 'artists'
                         : _tabController?.index == 2
-                        ? 'tracks'
+                        ? 'albums'
                         : 'genres';
                     _search(query, type);
                   },
@@ -139,9 +139,9 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
                   : TabBarView(
                 controller: _tabController,
                 children: [
-                  _buildResultsList('albums'),
-                  _buildResultsList('artists'),
                   _buildResultsList('tracks'),
+                  _buildResultsList('artists'),
+                  _buildResultsList('albums'),
                   _buildResultsList('genres'),
                 ],
               ),
