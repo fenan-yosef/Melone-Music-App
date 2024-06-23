@@ -54,7 +54,7 @@ class LocalMusicPlayer extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.only(left: 8, right: 8),
                                 child: ListTile(
-                                  tileColor: Colors.deepPurple[100],
+                                  tileColor: Colors.transparent,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12)),
                                   // tileColor: Colors.deepPurple,

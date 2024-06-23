@@ -1,9 +1,9 @@
+import 'package:Melone/features/music_feed/music_feed_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:Melone/features/local_music_player/local_music_player_page.dart';
 import '../../music_feed/music_feed.dart';
-import '../../music_feed/home_feed.dart';
 
 class LoginPage extends StatefulWidget {
   @override

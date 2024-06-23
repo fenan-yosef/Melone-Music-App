@@ -1,6 +1,6 @@
-import 'package:Melone/features/music_feed/home_feed.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../features/music_feed/music_feed_page.dart';
 import './routes.dart';
 import '../features/authentication/login/login_page.dart';
 

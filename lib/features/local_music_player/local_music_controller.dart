@@ -56,10 +56,14 @@ class PlayerController extends GetxController {
   }
 
   checkPermission() async {
-    var perm = await Permission.storage.request();
-    if (perm.isGranted) {
-    } else {
-      checkPermission();
+    while (true) {
+      var perm = await Permission.storage.request();
+      if (perm.isGranted) {
+        break;
+      } else {
+        await Future.delayed(
+            Duration(seconds: 1)); // Add a delay to avoid tight loop
+      }
     }
   }
 }

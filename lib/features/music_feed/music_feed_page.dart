@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeFeed> {
         end: Alignment.bottomRight,
       )),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color(0xff2cc3c4),
         appBar: AppBar(
           leading: Icon(
             Icons.account_circle_rounded,
@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeFeed> {
             BottomNavigationBarItem(
               icon: new Icon(Icons.home),
               label: 'Home',
-              backgroundColor: Color(0xff091838),
+              // backgroundColor: Color(0xff091838),
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.search),
@@ -137,12 +137,12 @@ class _HomeScreenState extends State<HomeFeed> {
               icon: Icon(Icons.library_music),
               label: 'Local Music',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_rounded),
-              label: 'Menu',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.menu_rounded),
+            //   label: 'Menu',
+            // ),
           ],
-          selectedItemColor: Color(0xff2cc3c4),
+          selectedItemColor: Color(0xff091838),
           unselectedItemColor: Colors.white,
           backgroundColor: Colors.transparent,
           elevation: 2.0,
@@ -203,11 +203,21 @@ class MusicFeed extends StatelessWidget {
               )
             ],
           ));
-        } else {
+        } else if (snapshot.hasData) {
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Center(
+                  child: Text(
+                    "Deezer Weekly Chart",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 10, 2, 85),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: 10,
                 ),
@@ -227,6 +237,10 @@ class MusicFeed extends StatelessWidget {
                 HorizontalTrackList(tracks: snapshot.data!.randomTracks),
               ],
             ),
+          );
+        } else {
+          return Center(
+            child: Text("No data available"),
           );
         }
       },
@@ -282,8 +296,8 @@ class HorizontalArtistList extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16.0),
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xff0ba360),
-                      Color(0xff3cba92)
+                      Color(0xff091838),
+                      Color(0xff091838)
                     ], // Replace with your desired colors
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -305,13 +319,14 @@ class HorizontalArtistList extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Text(
                         artist.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -352,8 +367,8 @@ class HorizontalAlbumList extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16.0),
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xff9795f0),
-                      Color(0xff3cba92)
+                      Color(0xff091838),
+                      Color(0xff091838)
                     ], // Replace with your desired colors
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -370,13 +385,14 @@ class HorizontalAlbumList extends StatelessWidget {
                               fit: BoxFit.cover, height: 120, width: 160)),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Text(
                         album.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -434,7 +450,7 @@ class HorizontalTrackList extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    color: Color(0xff92cc9d),
+                    color: Color(0xff091838),
                   ),
                   child: Column(
                     children: [
@@ -445,6 +461,7 @@ class HorizontalTrackList extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                         subtitle: Text(
