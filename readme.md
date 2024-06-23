@@ -3,7 +3,7 @@
 
 # FlutterMelody
 
-![FlutterMelody Logo](https://logo.png)
+![FlutterMelody Logo](https://github.com/pal-oe/Melone-Music-App/blob/main/melone%20sub%20logo.png)
 
 ## Overview
 
