@@ -86,13 +86,14 @@ class _HomeScreenState extends State<HomeFeed> {
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
-        colors: [Color(0xff30cfd0), Color(0xff330867)],
+        colors: [Color.fromARGB(255, 7, 24, 24), Color.fromARGB(255, 122, 51, 209)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       )),
       child: Scaffold(
-        backgroundColor: Color(0xff2cc3c4),
+        backgroundColor: Color.fromARGB(95, 37, 10, 100),
         appBar: AppBar(
+          
           leading: Icon(
             Icons.account_circle_rounded,
             color: Colors.transparent,
@@ -103,8 +104,8 @@ class _HomeScreenState extends State<HomeFeed> {
               "Melone",
               style: TextStyle(
                 fontSize: 20,
-                color: Color(0xff2c0d6e),
-                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 255, 255, 255),
+                fontWeight: FontWeight.w900,
               ),
             ),
           ),
@@ -142,7 +143,7 @@ class _HomeScreenState extends State<HomeFeed> {
             //   label: 'Menu',
             // ),
           ],
-          selectedItemColor: Color(0xff091838),
+          selectedItemColor: Color.fromARGB(255, 189, 86, 215),
           unselectedItemColor: Colors.white,
           backgroundColor: Colors.transparent,
           elevation: 2.0,
@@ -185,6 +186,7 @@ class MusicFeed extends StatelessWidget {
           return Center(
               child: Column(
             children: [
+              
               SizedBox(height: 90),
               Icon(
                 Icons.wifi_off_rounded,
@@ -199,6 +201,8 @@ class MusicFeed extends StatelessWidget {
                   color: Colors.white,
                   fontWeight: FontWeight.w100,
                   letterSpacing: 2,
+            
+
                 ),
               )
             ],

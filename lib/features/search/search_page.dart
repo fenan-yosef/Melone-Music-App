@@ -97,7 +97,7 @@ class _SearchPageState extends State<SearchPage>
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         bottom: TabBar(
-          labelColor: Color(0xff0B183F),
+          labelColor: Color.fromARGB(255, 154, 28, 200),
           unselectedLabelColor: Colors.white,
           controller: _tabController,
           tabs: [
