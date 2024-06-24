@@ -18,6 +18,8 @@ class PlayerPage extends StatefulWidget {
 
 class _PlayerPageState extends State<PlayerPage> {
   AudioPlayer _audioPlayer = AudioPlayer();
+  bool _onshuffle = false;
+  bool _onRepeat = false;
   bool _isPlaying = false;
   double _currentPosition = 0.0;
   double _totalDuration = 1.0;
@@ -49,10 +51,23 @@ class _PlayerPageState extends State<PlayerPage> {
       _isPlaying = !_isPlaying;
     });
   }
+  void _toggleShuffle() {
+    setState(() {
+      _onshuffle = !_onshuffle;
+    });
+  }
+
+  void _toggleRepeat(){
+    setState(() {
+      _onRepeat = !_onRepeat;
+    });
+  }
+
+
 
   void _rewind(){
     setState(() {
-      _currentPosition -= 5;
+      _currentPosition = 0.0;
     });
   }
   void _forward(){
@@ -126,8 +141,16 @@ class _PlayerPageState extends State<PlayerPage> {
               children: [
                 IconButton(
                   icon: Icon(
-                    Icons.fast_rewind,
-                    size: 50,
+                    _onshuffle? Icons.shuffle_on_sharp : Icons.shuffle,
+                    size: 20,
+                    color: Colors.purple,
+                  ),
+                  onPressed: _toggleShuffle ,
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.fast_rewind_outlined,
+                    size: 40,
                     color: Colors.purple,
                   ),
                   onPressed: _rewind,
@@ -142,12 +165,21 @@ class _PlayerPageState extends State<PlayerPage> {
                 ),
                 IconButton(
                   icon: Icon(
-                    Icons.fast_forward,
-                    size: 50,
+                    Icons.fast_forward_outlined,
+                    size: 40,
                     color: Colors.purple,
                   ),
                   onPressed: _forward,
                 ),
+                IconButton(
+                  icon: Icon(
+                    _onRepeat ? Icons.repeat_one : Icons.repeat,
+                    size: 20,
+                    color: Colors.purple,
+                  ),
+                  onPressed: _toggleRepeat,
+                ),
+                
               ],
             ),
             ),
