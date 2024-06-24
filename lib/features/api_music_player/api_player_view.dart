@@ -50,6 +50,17 @@ class _PlayerPageState extends State<PlayerPage> {
     });
   }
 
+  void _rewind(){
+    setState(() {
+      _currentPosition -= 5;
+    });
+  }
+  void _forward(){
+    setState(() {
+      _currentPosition += 5;
+    });
+  }
+
   void _onSeek(double value) {
     if (!_isSliderChanging) {
       setState(() {
@@ -109,13 +120,36 @@ class _PlayerPageState extends State<PlayerPage> {
               '${Duration(seconds: _currentPosition.toInt()).toString().split('.').first}',
             ),
             SizedBox(height: 20),
-            IconButton(
-              icon: Icon(
-                _isPlaying ? Icons.pause : Icons.play_arrow,
-                size: 64,
-                color: Colors.purple,
-              ),
-              onPressed: _togglePlayPause,
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.fast_rewind,
+                    size: 50,
+                    color: Colors.purple,
+                  ),
+                  onPressed: _rewind,
+                ),
+                IconButton(
+                  icon: Icon(
+                    _isPlaying ? Icons.pause : Icons.play_arrow,
+                    size: 64,
+                    color: Colors.purple,
+                  ),
+                  onPressed: _togglePlayPause,
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.fast_forward,
+                    size: 50,
+                    color: Colors.purple,
+                  ),
+                  onPressed: _forward,
+                ),
+              ],
+            ),
             ),
             // Add more components here (e.g., additional controls, etc.)
           ],
