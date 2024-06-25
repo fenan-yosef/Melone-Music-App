@@ -61,6 +61,7 @@ class LocalMusicPlayer extends StatelessWidget {
                                   title: Text(
                                     snapshot.data![index].displayNameWOExt,
                                     style: TextStyle(
+                                      color: const Color.fromARGB(255, 255, 255, 255),
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -68,7 +69,7 @@ class LocalMusicPlayer extends StatelessWidget {
                                   subtitle: Text(
                                     "${snapshot.data![index].artist}",
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color: const Color.fromARGB(255, 255, 255, 255),
                                       fontSize: 10,
                                     ),
                                   ),
@@ -77,7 +78,7 @@ class LocalMusicPlayer extends StatelessWidget {
                                     type: ArtworkType.AUDIO,
                                     nullArtworkWidget: const Icon(
                                       Icons.music_note,
-                                      color: Colors.black,
+                                      color: Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
                                   trailing:

@@ -98,8 +98,11 @@ class _PlayerPageState extends State<PlayerPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
+      
       appBar: AppBar(
+       
         title: Text(widget.trackName),
       ),
       body: Padding(
