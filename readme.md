@@ -1,41 +1,36 @@
 <b>Mobile-app</b>``code``
 
 
-# FlutterMelody
+# Melone
 
-![FlutterMelody Logo](https://github.com/pal-oe/Melone-Music-App/blob/main/melone%20sub%20logo.png)
+![Melone Logo](https://github.com/pal-oe/Melone-Music-App/blob/main/melone%20sub%20logo.png)
 
 ## Overview
-FlutterMelody is a mobile application designed to provide users with a seamless and enjoyable music listening experience on their Android devices. The app allows users to discover, stream, and organize their favorite songs, albums, and playlists. FlutterMelody aims to offer a user-friendly interface with intuitive navigation, personalized recommendations, and convenient playback controls.
+Melone is a mobile application designed to provide users with a seamless and enjoyable music listening experience on their Android devices. The app allows users to discover, stream, and organize their favorite songs, albums, and playlists. Melone music uses ##jamendo and ##deezer API to provide online source for music to users . Melone aims to offer a user-friendly interface with intuitive navigation, personalized recommendations, and convenient playback controls.
 
 
 ## Key Features
 
-- **Music Library:** Browse and search for songs, albums, and artists from a vast music library.
-- **Playlist Creation:** Create and manage custom playlists to organize favorite tracks.
+- **Music Library API:** Browse and search for songs, albums, and artists from a vast music library from 2 APIs.
 - **Audio Playback:** Smooth playback with support for play, pause, skip, and shuffle functionalities.
-- **Offline Mode:** Download songs for offline listening.
-- **Personalized Recommendations:** Receive music recommendations based on listening history and preferences.
-- **User Profile:** Create and manage profiles, customize settings, and view listening history.
-- **Social Sharing:** Share favorite songs, playlists, and discoveries on social media platforms.
-- **Dark Mode:** Support for dark mode option for improved visibility in low-light environments.
-- **Accessibility Features:** Includes text-to-speech support and customizable font sizes.
+- **Offline Mode:** Offline listening and loca music player.
+- **Personalized Recommendations:** Receive music recommendations based on deeer ApI.
 
 ## Target Audience
 
-FlutterMelody is targeted towards music enthusiasts, casual listeners, and anyone who enjoys discovering and streaming music on their Android devices. The app aims to appeal to users of all ages and musical preferences by offering a diverse selection of tracks and personalized recommendations.
+melone is targeted towards music enthusiasts, casual listeners, and anyone who enjoys discovering and streaming music on their Android devices. The app aims to appeal to users of all ages and musical preferences by offering a diverse selection of tracks and personalized recommendations.
 
 ## Installation
 
-To install FlutterMelody, follow these steps:
+To install melone, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your_username/FlutterMelody.git`
+1. Clone the repository: `git clone [https://github.com/your_username/Melone.git`
 2. Open the project in Android Studio.
 3. Build and run the app on your Android device or emulator.
 
 ## Contributing
 
-We welcome contributions from our Group! If you'd like to contribute to FlutterMelody, please follow these guidelines:
+We welcome contributions from our Group! If you'd like to contribute to Melone, please follow these guidelines:
 
 - Fork the repository.
 - Create a new branch: `git checkout -b feature/new-feature`
@@ -45,7 +40,7 @@ We welcome contributions from our Group! If you'd like to contribute to FlutterM
 
 ## License
 
-FlutterMelody is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+Melone is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Acknowledgements
 
