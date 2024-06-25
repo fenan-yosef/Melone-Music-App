@@ -6,8 +6,8 @@
 ![FlutterMelody Logo](https://github.com/pal-oe/Melone-Music-App/blob/main/melone%20sub%20logo.png)
 
 ## Overview
-
 FlutterMelody is a mobile application designed to provide users with a seamless and enjoyable music listening experience on their Android devices. The app allows users to discover, stream, and organize their favorite songs, albums, and playlists. FlutterMelody aims to offer a user-friendly interface with intuitive navigation, personalized recommendations, and convenient playback controls.
+
 
 ## Key Features
 
